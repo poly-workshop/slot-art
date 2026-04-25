@@ -1,0 +1,20 @@
+version: v2
+
+clean: true
+
+plugins:
+  - remote: buf.build/protocolbuffers/go
+    out: gen/go
+    opt:
+      - paths=source_relative
+  - remote: buf.build/grpc/go
+    out: gen/go
+    opt:
+      - paths=source_relative
+  - remote: buf.build/grpc-ecosystem/gateway
+    out: gen/go
+    opt:
+      - paths=source_relative
+  - local: .bin/protoc-gen-openapiv3
+    out: gen/openapi
+    strategy: all

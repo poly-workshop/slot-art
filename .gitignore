@@ -1,0 +1,9 @@
+.claude
+.env
+.bin/
+.gocache/
+config.yaml
+website/dist
+slot-art
+server
+__debug_bin**

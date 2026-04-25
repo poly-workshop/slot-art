@@ -1,0 +1,117 @@
+syntax = "proto3";
+
+package slot.v1;
+
+import "google/api/annotations.proto";
+import "slot/v1/resources.proto";
+
+option go_package = "github.com/poly-workshop/slot-art/gen/go/slot/v1;slotv1";
+
+service SlotArtService {
+  rpc InitSession(InitSessionRequest) returns (InitSessionResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/session"
+      body: "*"
+    };
+  }
+
+  rpc GetBootstrap(GetBootstrapRequest) returns (GetBootstrapResponse) {
+    option (google.api.http) = {get: "/api/v1/bootstrap"};
+  }
+
+  rpc RedeemCDKey(RedeemCDKeyRequest) returns (RedeemCDKeyResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/cdkeys/redeem"
+      body: "*"
+    };
+  }
+
+  rpc UploadReferenceImage(UploadReferenceImageRequest) returns (UploadReferenceImageResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/reference-images"
+      body: "*"
+    };
+  }
+
+  rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/tasks"
+      body: "*"
+    };
+  }
+
+  rpc GetTask(GetTaskRequest) returns (GetTaskResponse) {
+    option (google.api.http) = {get: "/api/v1/tasks/{task_id}"};
+  }
+
+  rpc GetDownloadUrl(GetDownloadUrlRequest) returns (GetDownloadUrlResponse) {
+    option (google.api.http) = {get: "/api/v1/tasks/{task_id}/images/{image_id}/download-url"};
+  }
+}
+
+message InitSessionRequest {
+  string fingerprint = 1;
+}
+
+message InitSessionResponse {
+  string uid = 1;
+  bool fingerprint_valid = 2;
+}
+
+message GetBootstrapRequest {}
+
+message GetBootstrapResponse {
+  Credit active_credit = 1;
+  repeated PromptTemplateSummary prompt_templates = 2;
+  int32 max_reference_images = 3;
+  int32 max_reference_image_bytes = 4;
+}
+
+message RedeemCDKeyRequest {
+  string key = 1;
+}
+
+message RedeemCDKeyResponse {
+  Credit credit = 1;
+}
+
+message UploadReferenceImageRequest {
+  string filename = 1;
+  string content_type = 2;
+  bytes data = 3;
+}
+
+message UploadReferenceImageResponse {
+  ReferenceImage reference_image = 1;
+}
+
+message CreateTaskRequest {
+  string credit_id = 1;
+  string template_id = 2;
+  map<string, string> slot_values = 3;
+  repeated string reference_image_ids = 4;
+}
+
+message CreateTaskResponse {
+  string task_id = 1;
+  TaskStatus status = 2;
+  int32 estimated_wait_seconds = 3;
+}
+
+message GetTaskRequest {
+  string task_id = 1;
+}
+
+message GetTaskResponse {
+  Task task = 1;
+}
+
+message GetDownloadUrlRequest {
+  string task_id = 1;
+  string image_id = 2;
+}
+
+message GetDownloadUrlResponse {
+  string url = 1;
+  int32 expires_in_seconds = 2;
+}

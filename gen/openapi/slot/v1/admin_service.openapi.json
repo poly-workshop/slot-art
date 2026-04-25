@@ -1,0 +1,1248 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "admin_service",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/admin/v1/dashboard": {
+      "get": {
+        "tags": [
+          "AdminService"
+        ],
+        "operationId": "AdminService_GetDashboard",
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.GetDashboardResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/v1/cdkeys/generate": {
+      "post": {
+        "tags": [
+          "AdminService"
+        ],
+        "operationId": "AdminService_GenerateCDKeys",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "batchId": {
+                    "type": "string"
+                  },
+                  "count": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "expiresAtUnix": {
+                    "type": "string",
+                    "format": "int64"
+                  },
+                  "imageCount": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "note": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.GenerateCDKeysResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/v1/cdkeys": {
+      "get": {
+        "tags": [
+          "AdminService"
+        ],
+        "operationId": "AdminService_ListCDKeys",
+        "parameters": [
+          {
+            "name": "page.pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page.pageToken",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/slot.v1.CDKeyStatus"
+            }
+          },
+          {
+            "name": "batchId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.ListCDKeysResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/v1/cdkeys/{cdkey_id}": {
+      "get": {
+        "tags": [
+          "AdminService"
+        ],
+        "operationId": "AdminService_GetCDKey",
+        "parameters": [
+          {
+            "name": "cdkey_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.GetCDKeyResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/v1/cdkeys/{cdkey_id}/revoke": {
+      "post": {
+        "tags": [
+          "AdminService"
+        ],
+        "operationId": "AdminService_RevokeCDKey",
+        "parameters": [
+          {
+            "name": "cdkey_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.RevokeCDKeyResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/v1/tasks": {
+      "get": {
+        "tags": [
+          "AdminService"
+        ],
+        "operationId": "AdminService_ListTasks",
+        "parameters": [
+          {
+            "name": "page.pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page.pageToken",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/slot.v1.TaskStatus"
+            }
+          },
+          {
+            "name": "uid",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.ListTasksResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/v1/tasks/{task_id}": {
+      "get": {
+        "tags": [
+          "AdminService"
+        ],
+        "operationId": "AdminService_GetAdminTask",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.GetAdminTaskResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/v1/sessions": {
+      "get": {
+        "tags": [
+          "AdminService"
+        ],
+        "operationId": "AdminService_ListSessions",
+        "parameters": [
+          {
+            "name": "page.pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page.pageToken",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.ListSessionsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/v1/credits": {
+      "get": {
+        "tags": [
+          "AdminService"
+        ],
+        "operationId": "AdminService_ListCredits",
+        "parameters": [
+          {
+            "name": "page.pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page.pageToken",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "uid",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/slot.v1.CreditStatus"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.ListCreditsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/v1/prompt-templates": {
+      "get": {
+        "tags": [
+          "AdminService"
+        ],
+        "operationId": "AdminService_ListPromptTemplates",
+        "parameters": [
+          {
+            "name": "page.pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page.pageToken",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeDisabled",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.ListPromptTemplatesResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "AdminService"
+        ],
+        "operationId": "AdminService_CreatePromptTemplate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/slot.v1.AdminPromptTemplate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.CreatePromptTemplateResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/v1/prompt-templates/{template_id}": {
+      "get": {
+        "tags": [
+          "AdminService"
+        ],
+        "operationId": "AdminService_GetPromptTemplate",
+        "parameters": [
+          {
+            "name": "template_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.GetPromptTemplateResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "AdminService"
+        ],
+        "operationId": "AdminService_DeletePromptTemplate",
+        "parameters": [
+          {
+            "name": "template_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.DeletePromptTemplateResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/v1/prompt-templates/{template.template_id}": {
+      "patch": {
+        "tags": [
+          "AdminService"
+        ],
+        "operationId": "AdminService_UpdatePromptTemplate",
+        "parameters": [
+          {
+            "name": "template.template_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/slot.v1.AdminPromptTemplate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.UpdatePromptTemplateResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/v1/prompt-templates/{template_id}/set-enabled": {
+      "post": {
+        "tags": [
+          "AdminService"
+        ],
+        "operationId": "AdminService_SetPromptTemplateEnabled",
+        "parameters": [
+          {
+            "name": "template_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.SetPromptTemplateEnabledResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "google.rpc.Status": {
+        "type": "object",
+        "description": "The Status type defines a logical error model suitable for different programming environments.",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The status code, which should be an enum value of google.rpc.Code."
+          },
+          "details": {
+            "type": "array",
+            "description": "A list of messages that carry the error details.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "A developer-facing error message."
+          }
+        }
+      },
+      "slot.v1.AdminPromptTemplate": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "description": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/slot.v1.PromptTemplateField"
+            }
+          },
+          "name": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "templateBody": {
+            "type": "string"
+          },
+          "templateId": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "slot.v1.AdminTask": {
+        "type": "object",
+        "properties": {
+          "completedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "errorMessage": {
+            "type": "string"
+          },
+          "imageCountGenerated": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imageCountRequested": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "renderedPrompt": {
+            "type": "string"
+          },
+          "slotValues": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "status": {
+            "$ref": "#/components/schemas/slot.v1.TaskStatus"
+          },
+          "taskId": {
+            "type": "string"
+          },
+          "templateId": {
+            "type": "string"
+          },
+          "templateVersion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "uid": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "slot.v1.CDKey": {
+        "type": "object",
+        "properties": {
+          "batchId": {
+            "type": "string"
+          },
+          "cdkeyId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "imageCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "keyHash": {
+            "type": "string"
+          },
+          "maskedKey": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "redeemedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "redeemedByUid": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/slot.v1.CDKeyStatus"
+          }
+        }
+      },
+      "slot.v1.CDKeyStatus": {
+        "type": "string",
+        "enum": [
+          "CD_KEY_STATUS_UNSPECIFIED",
+          "CD_KEY_STATUS_CREATED",
+          "CD_KEY_STATUS_REDEEMED",
+          "CD_KEY_STATUS_REVOKED",
+          "CD_KEY_STATUS_EXPIRED"
+        ]
+      },
+      "slot.v1.CreatePromptTemplateResponse": {
+        "type": "object",
+        "properties": {
+          "template": {
+            "$ref": "#/components/schemas/slot.v1.AdminPromptTemplate"
+          }
+        }
+      },
+      "slot.v1.Credit": {
+        "type": "object",
+        "properties": {
+          "consumedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creditId": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "imageCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "remainingImageCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "source": {
+            "type": "string"
+          },
+          "sourceRef": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/slot.v1.CreditStatus"
+          },
+          "uid": {
+            "type": "string"
+          }
+        }
+      },
+      "slot.v1.CreditStatus": {
+        "type": "string",
+        "enum": [
+          "CREDIT_STATUS_UNSPECIFIED",
+          "CREDIT_STATUS_ACTIVE",
+          "CREDIT_STATUS_CONSUMED",
+          "CREDIT_STATUS_EXPIRED"
+        ]
+      },
+      "slot.v1.DeletePromptTemplateResponse": {
+        "type": "object"
+      },
+      "slot.v1.GenerateCDKeysResponse": {
+        "type": "object",
+        "properties": {
+          "cdkeys": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/slot.v1.GeneratedCDKey"
+            }
+          }
+        }
+      },
+      "slot.v1.GeneratedCDKey": {
+        "type": "object",
+        "properties": {
+          "cdkey": {
+            "$ref": "#/components/schemas/slot.v1.CDKey"
+          },
+          "plaintextKey": {
+            "type": "string"
+          }
+        }
+      },
+      "slot.v1.GetAdminTaskResponse": {
+        "type": "object",
+        "properties": {
+          "task": {
+            "$ref": "#/components/schemas/slot.v1.AdminTask"
+          }
+        }
+      },
+      "slot.v1.GetCDKeyResponse": {
+        "type": "object",
+        "properties": {
+          "cdkey": {
+            "$ref": "#/components/schemas/slot.v1.CDKey"
+          }
+        }
+      },
+      "slot.v1.GetDashboardResponse": {
+        "type": "object",
+        "properties": {
+          "activePromptTemplates": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "activeSessions": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cdkeysCreated": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cdkeysRedeemed": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cdkeysRevoked": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "completedTasks": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "failedTasks": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pendingTasks": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "processingTasks": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "slot.v1.GetPromptTemplateResponse": {
+        "type": "object",
+        "properties": {
+          "template": {
+            "$ref": "#/components/schemas/slot.v1.AdminPromptTemplate"
+          }
+        }
+      },
+      "slot.v1.ListCDKeysResponse": {
+        "type": "object",
+        "properties": {
+          "cdkeys": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/slot.v1.CDKey"
+            }
+          },
+          "page": {
+            "$ref": "#/components/schemas/slot.v1.PageResponse"
+          }
+        }
+      },
+      "slot.v1.ListCreditsResponse": {
+        "type": "object",
+        "properties": {
+          "credits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/slot.v1.Credit"
+            }
+          },
+          "page": {
+            "$ref": "#/components/schemas/slot.v1.PageResponse"
+          }
+        }
+      },
+      "slot.v1.ListPromptTemplatesResponse": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "$ref": "#/components/schemas/slot.v1.PageResponse"
+          },
+          "templates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/slot.v1.AdminPromptTemplate"
+            }
+          }
+        }
+      },
+      "slot.v1.ListSessionsResponse": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "$ref": "#/components/schemas/slot.v1.PageResponse"
+          },
+          "sessions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/slot.v1.Session"
+            }
+          }
+        }
+      },
+      "slot.v1.ListTasksResponse": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "$ref": "#/components/schemas/slot.v1.PageResponse"
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/slot.v1.AdminTask"
+            }
+          }
+        }
+      },
+      "slot.v1.PageResponse": {
+        "type": "object",
+        "properties": {
+          "nextPageToken": {
+            "type": "string"
+          },
+          "totalSize": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "slot.v1.PromptTemplateField": {
+        "type": "object",
+        "properties": {
+          "helpText": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "maxLength": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "placeholder": {
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "type": {
+            "$ref": "#/components/schemas/slot.v1.PromptTemplateFieldType"
+          }
+        }
+      },
+      "slot.v1.PromptTemplateFieldType": {
+        "type": "string",
+        "enum": [
+          "PROMPT_TEMPLATE_FIELD_TYPE_UNSPECIFIED",
+          "PROMPT_TEMPLATE_FIELD_TYPE_TEXT",
+          "PROMPT_TEMPLATE_FIELD_TYPE_TEXTAREA",
+          "PROMPT_TEMPLATE_FIELD_TYPE_SELECT",
+          "PROMPT_TEMPLATE_FIELD_TYPE_NUMBER"
+        ]
+      },
+      "slot.v1.RevokeCDKeyResponse": {
+        "type": "object",
+        "properties": {
+          "cdkey": {
+            "$ref": "#/components/schemas/slot.v1.CDKey"
+          }
+        }
+      },
+      "slot.v1.Session": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fingerprint": {
+            "type": "string"
+          },
+          "lastSeen": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "uid": {
+            "type": "string"
+          }
+        }
+      },
+      "slot.v1.SetPromptTemplateEnabledResponse": {
+        "type": "object",
+        "properties": {
+          "template": {
+            "$ref": "#/components/schemas/slot.v1.AdminPromptTemplate"
+          }
+        }
+      },
+      "slot.v1.TaskStatus": {
+        "type": "string",
+        "enum": [
+          "TASK_STATUS_UNSPECIFIED",
+          "TASK_STATUS_PENDING",
+          "TASK_STATUS_PROCESSING",
+          "TASK_STATUS_COMPLETED",
+          "TASK_STATUS_FAILED"
+        ]
+      },
+      "slot.v1.UpdatePromptTemplateResponse": {
+        "type": "object",
+        "properties": {
+          "template": {
+            "$ref": "#/components/schemas/slot.v1.AdminPromptTemplate"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "AdminService"
+    }
+  ]
+}

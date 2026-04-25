@@ -1,0 +1,681 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "slot_service",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/session": {
+      "post": {
+        "tags": [
+          "SlotArtService"
+        ],
+        "operationId": "SlotArtService_InitSession",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fingerprint": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.InitSessionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/bootstrap": {
+      "get": {
+        "tags": [
+          "SlotArtService"
+        ],
+        "operationId": "SlotArtService_GetBootstrap",
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.GetBootstrapResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cdkeys/redeem": {
+      "post": {
+        "tags": [
+          "SlotArtService"
+        ],
+        "operationId": "SlotArtService_RedeemCDKey",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "key": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.RedeemCDKeyResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/reference-images": {
+      "post": {
+        "tags": [
+          "SlotArtService"
+        ],
+        "operationId": "SlotArtService_UploadReferenceImage",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contentType": {
+                    "type": "string"
+                  },
+                  "data": {
+                    "type": "string",
+                    "format": "byte"
+                  },
+                  "filename": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.UploadReferenceImageResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tasks": {
+      "post": {
+        "tags": [
+          "SlotArtService"
+        ],
+        "operationId": "SlotArtService_CreateTask",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "creditId": {
+                    "type": "string"
+                  },
+                  "referenceImageIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "slotValues": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "templateId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.CreateTaskResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tasks/{task_id}": {
+      "get": {
+        "tags": [
+          "SlotArtService"
+        ],
+        "operationId": "SlotArtService_GetTask",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.GetTaskResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tasks/{task_id}/images/{image_id}/download-url": {
+      "get": {
+        "tags": [
+          "SlotArtService"
+        ],
+        "operationId": "SlotArtService_GetDownloadUrl",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "image_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "An unexpected error response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/google.rpc.Status"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "A successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/slot.v1.GetDownloadUrlResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "google.rpc.Status": {
+        "type": "object",
+        "description": "The Status type defines a logical error model suitable for different programming environments.",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The status code, which should be an enum value of google.rpc.Code."
+          },
+          "details": {
+            "type": "array",
+            "description": "A list of messages that carry the error details.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "message": {
+            "type": "string",
+            "description": "A developer-facing error message."
+          }
+        }
+      },
+      "slot.v1.CreateTaskResponse": {
+        "type": "object",
+        "properties": {
+          "estimatedWaitSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "$ref": "#/components/schemas/slot.v1.TaskStatus"
+          },
+          "taskId": {
+            "type": "string"
+          }
+        }
+      },
+      "slot.v1.Credit": {
+        "type": "object",
+        "properties": {
+          "consumedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creditId": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "imageCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "remainingImageCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "source": {
+            "type": "string"
+          },
+          "sourceRef": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/slot.v1.CreditStatus"
+          },
+          "uid": {
+            "type": "string"
+          }
+        }
+      },
+      "slot.v1.CreditStatus": {
+        "type": "string",
+        "enum": [
+          "CREDIT_STATUS_UNSPECIFIED",
+          "CREDIT_STATUS_ACTIVE",
+          "CREDIT_STATUS_CONSUMED",
+          "CREDIT_STATUS_EXPIRED"
+        ]
+      },
+      "slot.v1.GetBootstrapResponse": {
+        "type": "object",
+        "properties": {
+          "activeCredit": {
+            "$ref": "#/components/schemas/slot.v1.Credit"
+          },
+          "maxReferenceImageBytes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxReferenceImages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "promptTemplates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/slot.v1.PromptTemplateSummary"
+            }
+          }
+        }
+      },
+      "slot.v1.GetDownloadUrlResponse": {
+        "type": "object",
+        "properties": {
+          "expiresInSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "slot.v1.GetTaskResponse": {
+        "type": "object",
+        "properties": {
+          "task": {
+            "$ref": "#/components/schemas/slot.v1.Task"
+          }
+        }
+      },
+      "slot.v1.InitSessionResponse": {
+        "type": "object",
+        "properties": {
+          "fingerprintValid": {
+            "type": "boolean"
+          },
+          "uid": {
+            "type": "string"
+          }
+        }
+      },
+      "slot.v1.PromptTemplateField": {
+        "type": "object",
+        "properties": {
+          "helpText": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "maxLength": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "placeholder": {
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "type": {
+            "$ref": "#/components/schemas/slot.v1.PromptTemplateFieldType"
+          }
+        }
+      },
+      "slot.v1.PromptTemplateFieldType": {
+        "type": "string",
+        "enum": [
+          "PROMPT_TEMPLATE_FIELD_TYPE_UNSPECIFIED",
+          "PROMPT_TEMPLATE_FIELD_TYPE_TEXT",
+          "PROMPT_TEMPLATE_FIELD_TYPE_TEXTAREA",
+          "PROMPT_TEMPLATE_FIELD_TYPE_SELECT",
+          "PROMPT_TEMPLATE_FIELD_TYPE_NUMBER"
+        ]
+      },
+      "slot.v1.PromptTemplateSummary": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/slot.v1.PromptTemplateField"
+            }
+          },
+          "name": {
+            "type": "string"
+          },
+          "templateId": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "slot.v1.RedeemCDKeyResponse": {
+        "type": "object",
+        "properties": {
+          "credit": {
+            "$ref": "#/components/schemas/slot.v1.Credit"
+          }
+        }
+      },
+      "slot.v1.ReferenceImage": {
+        "type": "object",
+        "properties": {
+          "contentType": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "filename": {
+            "type": "string"
+          },
+          "referenceImageId": {
+            "type": "string"
+          },
+          "sizeBytes": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      },
+      "slot.v1.ResultImage": {
+        "type": "object",
+        "properties": {
+          "downloadUrl": {
+            "type": "string"
+          },
+          "format": {
+            "type": "string"
+          },
+          "height": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imageId": {
+            "type": "string"
+          },
+          "width": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "slot.v1.Task": {
+        "type": "object",
+        "properties": {
+          "completedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "errorMessage": {
+            "type": "string"
+          },
+          "imageCountGenerated": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imageCountRequested": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "result": {
+            "$ref": "#/components/schemas/slot.v1.TaskResult"
+          },
+          "status": {
+            "$ref": "#/components/schemas/slot.v1.TaskStatus"
+          },
+          "taskId": {
+            "type": "string"
+          },
+          "templateId": {
+            "type": "string"
+          },
+          "templateName": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "slot.v1.TaskResult": {
+        "type": "object",
+        "properties": {
+          "generatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/slot.v1.ResultImage"
+            }
+          }
+        }
+      },
+      "slot.v1.TaskStatus": {
+        "type": "string",
+        "enum": [
+          "TASK_STATUS_UNSPECIFIED",
+          "TASK_STATUS_PENDING",
+          "TASK_STATUS_PROCESSING",
+          "TASK_STATUS_COMPLETED",
+          "TASK_STATUS_FAILED"
+        ]
+      },
+      "slot.v1.UploadReferenceImageResponse": {
+        "type": "object",
+        "properties": {
+          "referenceImage": {
+            "$ref": "#/components/schemas/slot.v1.ReferenceImage"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "SlotArtService"
+    }
+  ]
+}

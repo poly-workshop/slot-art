@@ -1,0 +1,232 @@
+syntax = "proto3";
+
+package slot.v1;
+
+import "google/api/annotations.proto";
+import "slot/v1/common.proto";
+import "slot/v1/resources.proto";
+
+option go_package = "github.com/poly-workshop/slot-art/gen/go/slot/v1;slotv1";
+
+service AdminService {
+  rpc GetDashboard(GetDashboardRequest) returns (GetDashboardResponse) {
+    option (google.api.http) = {get: "/api/admin/v1/dashboard"};
+  }
+
+  rpc GenerateCDKeys(GenerateCDKeysRequest) returns (GenerateCDKeysResponse) {
+    option (google.api.http) = {
+      post: "/api/admin/v1/cdkeys/generate"
+      body: "*"
+    };
+  }
+
+  rpc ListCDKeys(ListCDKeysRequest) returns (ListCDKeysResponse) {
+    option (google.api.http) = {get: "/api/admin/v1/cdkeys"};
+  }
+
+  rpc GetCDKey(GetCDKeyRequest) returns (GetCDKeyResponse) {
+    option (google.api.http) = {get: "/api/admin/v1/cdkeys/{cdkey_id}"};
+  }
+
+  rpc RevokeCDKey(RevokeCDKeyRequest) returns (RevokeCDKeyResponse) {
+    option (google.api.http) = {
+      post: "/api/admin/v1/cdkeys/{cdkey_id}/revoke"
+      body: "*"
+    };
+  }
+
+  rpc ListTasks(ListTasksRequest) returns (ListTasksResponse) {
+    option (google.api.http) = {get: "/api/admin/v1/tasks"};
+  }
+
+  rpc GetAdminTask(GetAdminTaskRequest) returns (GetAdminTaskResponse) {
+    option (google.api.http) = {get: "/api/admin/v1/tasks/{task_id}"};
+  }
+
+  rpc ListSessions(ListSessionsRequest) returns (ListSessionsResponse) {
+    option (google.api.http) = {get: "/api/admin/v1/sessions"};
+  }
+
+  rpc ListCredits(ListCreditsRequest) returns (ListCreditsResponse) {
+    option (google.api.http) = {get: "/api/admin/v1/credits"};
+  }
+
+  rpc ListPromptTemplates(ListPromptTemplatesRequest) returns (ListPromptTemplatesResponse) {
+    option (google.api.http) = {get: "/api/admin/v1/prompt-templates"};
+  }
+
+  rpc GetPromptTemplate(GetPromptTemplateRequest) returns (GetPromptTemplateResponse) {
+    option (google.api.http) = {get: "/api/admin/v1/prompt-templates/{template_id}"};
+  }
+
+  rpc CreatePromptTemplate(CreatePromptTemplateRequest) returns (CreatePromptTemplateResponse) {
+    option (google.api.http) = {
+      post: "/api/admin/v1/prompt-templates"
+      body: "template"
+    };
+  }
+
+  rpc UpdatePromptTemplate(UpdatePromptTemplateRequest) returns (UpdatePromptTemplateResponse) {
+    option (google.api.http) = {
+      patch: "/api/admin/v1/prompt-templates/{template.template_id}"
+      body: "template"
+    };
+  }
+
+  rpc SetPromptTemplateEnabled(SetPromptTemplateEnabledRequest) returns (SetPromptTemplateEnabledResponse) {
+    option (google.api.http) = {
+      post: "/api/admin/v1/prompt-templates/{template_id}/set-enabled"
+      body: "*"
+    };
+  }
+
+  rpc DeletePromptTemplate(DeletePromptTemplateRequest) returns (DeletePromptTemplateResponse) {
+    option (google.api.http) = {delete: "/api/admin/v1/prompt-templates/{template_id}"};
+  }
+}
+
+message GetDashboardRequest {}
+
+message GetDashboardResponse {
+  int32 pending_tasks = 1;
+  int32 processing_tasks = 2;
+  int32 completed_tasks = 3;
+  int32 failed_tasks = 4;
+  int32 active_sessions = 5;
+  int32 active_prompt_templates = 6;
+  int32 cdkeys_created = 7;
+  int32 cdkeys_redeemed = 8;
+  int32 cdkeys_revoked = 9;
+}
+
+message GenerateCDKeysRequest {
+  int32 count = 1;
+  int32 image_count = 2;
+  string batch_id = 3;
+  int64 expires_at_unix = 4;
+  string note = 5;
+}
+
+message GeneratedCDKey {
+  CDKey cdkey = 1;
+  string plaintext_key = 2;
+}
+
+message GenerateCDKeysResponse {
+  repeated GeneratedCDKey cdkeys = 1;
+}
+
+message ListCDKeysRequest {
+  PageRequest page = 1;
+  CDKeyStatus status = 2;
+  string batch_id = 3;
+}
+
+message ListCDKeysResponse {
+  repeated CDKey cdkeys = 1;
+  PageResponse page = 2;
+}
+
+message GetCDKeyRequest {
+  string cdkey_id = 1;
+}
+
+message GetCDKeyResponse {
+  CDKey cdkey = 1;
+}
+
+message RevokeCDKeyRequest {
+  string cdkey_id = 1;
+}
+
+message RevokeCDKeyResponse {
+  CDKey cdkey = 1;
+}
+
+message ListTasksRequest {
+  PageRequest page = 1;
+  TaskStatus status = 2;
+  string uid = 3;
+}
+
+message ListTasksResponse {
+  repeated AdminTask tasks = 1;
+  PageResponse page = 2;
+}
+
+message GetAdminTaskRequest {
+  string task_id = 1;
+}
+
+message GetAdminTaskResponse {
+  AdminTask task = 1;
+}
+
+message ListSessionsRequest {
+  PageRequest page = 1;
+}
+
+message ListSessionsResponse {
+  repeated Session sessions = 1;
+  PageResponse page = 2;
+}
+
+message ListCreditsRequest {
+  PageRequest page = 1;
+  string uid = 2;
+  CreditStatus status = 3;
+}
+
+message ListCreditsResponse {
+  repeated Credit credits = 1;
+  PageResponse page = 2;
+}
+
+message ListPromptTemplatesRequest {
+  PageRequest page = 1;
+  bool include_disabled = 2;
+}
+
+message ListPromptTemplatesResponse {
+  repeated AdminPromptTemplate templates = 1;
+  PageResponse page = 2;
+}
+
+message GetPromptTemplateRequest {
+  string template_id = 1;
+}
+
+message GetPromptTemplateResponse {
+  AdminPromptTemplate template = 1;
+}
+
+message CreatePromptTemplateRequest {
+  AdminPromptTemplate template = 1;
+}
+
+message CreatePromptTemplateResponse {
+  AdminPromptTemplate template = 1;
+}
+
+message UpdatePromptTemplateRequest {
+  AdminPromptTemplate template = 1;
+}
+
+message UpdatePromptTemplateResponse {
+  AdminPromptTemplate template = 1;
+}
+
+message SetPromptTemplateEnabledRequest {
+  string template_id = 1;
+  bool enabled = 2;
+}
+
+message SetPromptTemplateEnabledResponse {
+  AdminPromptTemplate template = 1;
+}
+
+message DeletePromptTemplateRequest {
+  string template_id = 1;
+}
+
+message DeletePromptTemplateResponse {}

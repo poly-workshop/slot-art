@@ -1,0 +1,158 @@
+syntax = "proto3";
+
+package slot.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/poly-workshop/slot-art/gen/go/slot/v1;slotv1";
+
+enum CreditStatus {
+  CREDIT_STATUS_UNSPECIFIED = 0;
+  CREDIT_STATUS_ACTIVE = 1;
+  CREDIT_STATUS_CONSUMED = 2;
+  CREDIT_STATUS_EXPIRED = 3;
+}
+
+enum TaskStatus {
+  TASK_STATUS_UNSPECIFIED = 0;
+  TASK_STATUS_PENDING = 1;
+  TASK_STATUS_PROCESSING = 2;
+  TASK_STATUS_COMPLETED = 3;
+  TASK_STATUS_FAILED = 4;
+}
+
+enum CDKeyStatus {
+  CD_KEY_STATUS_UNSPECIFIED = 0;
+  CD_KEY_STATUS_CREATED = 1;
+  CD_KEY_STATUS_REDEEMED = 2;
+  CD_KEY_STATUS_REVOKED = 3;
+  CD_KEY_STATUS_EXPIRED = 4;
+}
+
+enum PromptTemplateFieldType {
+  PROMPT_TEMPLATE_FIELD_TYPE_UNSPECIFIED = 0;
+  PROMPT_TEMPLATE_FIELD_TYPE_TEXT = 1;
+  PROMPT_TEMPLATE_FIELD_TYPE_TEXTAREA = 2;
+  PROMPT_TEMPLATE_FIELD_TYPE_SELECT = 3;
+  PROMPT_TEMPLATE_FIELD_TYPE_NUMBER = 4;
+}
+
+message Credit {
+  string credit_id = 1;
+  string uid = 2;
+  CreditStatus status = 3;
+  int32 image_count = 4;
+  int32 remaining_image_count = 5;
+  string source = 6;
+  string source_ref = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp expires_at = 9;
+  google.protobuf.Timestamp consumed_at = 10;
+}
+
+message ReferenceImage {
+  string reference_image_id = 1;
+  string filename = 2;
+  string content_type = 3;
+  int64 size_bytes = 4;
+  google.protobuf.Timestamp expires_at = 5;
+}
+
+message Task {
+  string task_id = 1;
+  TaskStatus status = 2;
+  string template_id = 3;
+  string template_name = 4;
+  int32 image_count_requested = 5;
+  int32 image_count_generated = 6;
+  string error_message = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
+  google.protobuf.Timestamp completed_at = 10;
+  TaskResult result = 11;
+}
+
+message TaskResult {
+  repeated ResultImage images = 1;
+  google.protobuf.Timestamp generated_at = 2;
+}
+
+message ResultImage {
+  string image_id = 1;
+  string download_url = 2;
+  int32 width = 3;
+  int32 height = 4;
+  string format = 5;
+}
+
+message PromptTemplateField {
+  string name = 1;
+  string label = 2;
+  PromptTemplateFieldType type = 3;
+  bool required = 4;
+  int32 max_length = 5;
+  repeated string options = 6;
+  string placeholder = 7;
+  string help_text = 8;
+}
+
+message PromptTemplateSummary {
+  string template_id = 1;
+  string name = 2;
+  string description = 3;
+  string category = 4;
+  int32 version = 5;
+  repeated PromptTemplateField fields = 6;
+}
+
+message AdminPromptTemplate {
+  string template_id = 1;
+  string name = 2;
+  string description = 3;
+  string category = 4;
+  int32 version = 5;
+  bool enabled = 6;
+  string template_body = 7;
+  repeated PromptTemplateField fields = 8;
+  string source = 9;
+  google.protobuf.Timestamp created_at = 10;
+  google.protobuf.Timestamp updated_at = 11;
+}
+
+message CDKey {
+  string cdkey_id = 1;
+  string masked_key = 2;
+  string key_hash = 3;
+  string batch_id = 4;
+  CDKeyStatus status = 5;
+  int32 image_count = 6;
+  google.protobuf.Timestamp expires_at = 7;
+  string redeemed_by_uid = 8;
+  google.protobuf.Timestamp redeemed_at = 9;
+  string created_by = 10;
+  google.protobuf.Timestamp created_at = 11;
+  string note = 12;
+}
+
+message AdminTask {
+  string task_id = 1;
+  string uid = 2;
+  TaskStatus status = 3;
+  string template_id = 4;
+  int32 template_version = 5;
+  map<string, string> slot_values = 6;
+  string rendered_prompt = 7;
+  int32 image_count_requested = 8;
+  int32 image_count_generated = 9;
+  string error_message = 10;
+  google.protobuf.Timestamp created_at = 11;
+  google.protobuf.Timestamp updated_at = 12;
+  google.protobuf.Timestamp completed_at = 13;
+}
+
+message Session {
+  string uid = 1;
+  string fingerprint = 2;
+  google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Timestamp last_seen = 4;
+}
